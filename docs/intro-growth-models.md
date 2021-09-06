@@ -1,5 +1,5 @@
 
-# Introduction to Nonstationary Models
+# Introduction to nonstationary models
 
 $$
 \newcommand{\ss}{\mathrm{ss}}
@@ -17,9 +17,6 @@ $$
 
 * Valid first-order (or any higher-order local) approximate solution can
   be computed based on the numerical description of the steady state
-
-* IrisT uses first-order approximate solution also in nonlinear
-  (stacked-time) simulations
 
 ---
 

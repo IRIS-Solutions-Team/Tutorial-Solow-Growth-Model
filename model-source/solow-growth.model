@@ -1,10 +1,11 @@
-%% Solow Growth Model
+%% Solow growth model 
 %
 % This is a Solow growth model file. The model has exogenous technology
 % growth and exogenous labor force growth. The model variables (output,
 % consumption, investment, capital, labor, technology) are not
 % stationarized, and kept in their original levels. All variables grow at
-% constant (albeit different) rates in steady state.
+% constant (albeit possibly different) rates in steady state.
+%
 
 !variables
 
