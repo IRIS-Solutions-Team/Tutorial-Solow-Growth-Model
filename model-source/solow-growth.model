@@ -1,0 +1,64 @@
+%% Solow Growth Model
+%
+% This is a Solow growth model file. The model has exogenous technology
+% growth and exogenous labor force growth. The model variables (output,
+% consumption, investment, capital, labor, technology) are not
+% stationarized, and kept in their original levels. All variables grow at
+% constant (albeit different) rates in steady state.
+
+!variables
+
+    "Output" y
+    "Consumption" c
+    "Investment" i
+    "Capital" k
+    "Labor" n
+    "Technology" a
+
+    "Capital to output ratio" k_to_y
+    "Log of output" yy
+
+
+!parameters
+
+    "Gross rate of chang in technology" ss_roc_a
+    "Labor share of production" gamma
+    "Depreciation of capital" delta
+    "Gross rate of growth in labor force" ss_roc_n
+    "Saving ratio" sigma
+
+
+!shocks
+
+    "Shock to technology" shk_a
+    "Shock to labor force" shk_n
+    "Shock to saving ratio" shk_c
+
+
+!log-variables !all-but
+
+    k_to_y, yy
+
+
+!equations
+
+    c = (1 - sigma*exp(shk_c)) * y;
+
+    y = c + i;
+
+    k = (1-delta)*k{-1} + i;
+
+    y = (a * n)^gamma * k^(1-gamma);
+
+    a = ss_roc_a*a{-1}*exp(shk_a) ...
+    !! roc(a) = ss_roc_a;
+
+    n = ss_roc_n*n{-1}*exp(shk_n) ...
+    !! roc(n) = ss_roc_n;
+
+    k_to_y = k / y;
+
+    yy = log(y);
+
+
+
