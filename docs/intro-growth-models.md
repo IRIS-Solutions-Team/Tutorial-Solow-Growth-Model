@@ -1,5 +1,5 @@
 
-# Introduction to nonstationary models
+# Introduction to Nonstationary Models in IrisT
 
 $$
 \newcommand{\ss}{\mathrm{ss}}
@@ -13,10 +13,10 @@ $$
 * Nonstationary balanced growth path can be preserved in their original
   levels, with no manual stationarizing transformation needed
 
-* Steady state (not a fixed point) can be numerically described
+* A BGP steady state (not a fixed point) can be numerically described
 
 * Valid first-order (or any higher-order local) approximate solution can
-  be computed based on the numerical description of the steady state
+  be computed using a Taylor expansion around the BGP
 
 ---
 
@@ -24,19 +24,19 @@ $$
 
 * Single source of growth
 
-* Multiple sources of growth with no "cross-sectoral" substitution
+* Multiple sources of growth with no "cross-sectoral" substitution (example: model with real growth and nominal price level growth)
 
-* Multiple sources of growth with "cross-sectoral" substitution
+* Multiple sources of growth with "cross-sectoral" substitution provided the elasticities of substitution are unitary (example: model with ttradable/nontradable growth)
 
 
 ---
 
-## What is steady state needed for?
+## What is a BGP steady state needed for?
 
-* Useful analytics on its own, e.g. comparative static simulations
+* Useful analytics on its own, including comparative static simulations
 
-* Numerical description of steady state needed for first-order (or any
-  higher-order local) approximate solution
+* Numerical description of the steady state needed for first-order (or any
+  higher-order) approximate solution
 
 
 ---
@@ -59,7 +59,7 @@ steady-state calculations
 
 ---
 
-## How to describe steady state of a nonstationary model?
+## How to describe the steady state of a nonstationary model?
 
 ![BGP](bgp.png)
 
@@ -75,7 +75,7 @@ steady-state calculations
 
 ---
 
-## Problems/questions
+## Seeming problems
 
 * How to set up the system of equations to calculate both the levels and
   the differences/rates of change simultaneously?
@@ -120,7 +120,7 @@ $$
 \begin{gathered}
 A_{t} = \alpha \, A_{t-1} \exp \epsilon_t \quad\longrightarrow\quad
 \hat a_t = \alpha \exp \epsilon_t \\[5pt]
-y_t \equiv Y_t / A_t \quad\longrightarrow\quad
+y_t = \gamma  A_{t-1} \quad\longrightarrow\quad
 y_t = \left. \gamma \middle/ \hat a_t \right. 
 \end{gathered}
 $$
@@ -250,7 +250,7 @@ Absolutely no stationarizing step needed to calculate
 
 ## Direct route: Steady-state
 
-1. Rewrite the equations as steady-state equaitons in the following four unknowns:
+1. Write the equations in their steady-state form for the following four unknowns:
 
    * Level of $A_t$, denoted by $A_\ss$
 
@@ -398,3 +398,98 @@ Note that
 
 ---
 
+## First-order solution matrices (aka state-space form)
+
+
+IrisT works with two forms of solution (state-space form)
+
+
+* Triangular: used in stationarity diagnosis, Kalman filtering, calculation of autocovariance and power spectrum functions
+
+* Nontriangular (rectangular): used in simulations
+
+
+---
+
+## Non-triangular (rectangular) form
+
+Rectangular transition equation with no forward expansion
+
+$$
+\begin{gathered}
+x_t \equiv
+\begin{bmatrix}
+xf_t \\[5pt]
+xb_t 
+\end{bmatrix}
+= 
+T \, xb_{t-1}
++ R \, \epsilon_t + K
+\\[20pt]
+T = 
+\begin{bmatrix}
+T_1 \\[5pt]
+T_2
+\end{bmatrix}
+\end{gathered}
+$$
+
+where
+
+* $xf_t$ is an $nf \times 1$ vector of non-predetermined (forward-looking) variables, including auxiliary leads
+
+* $xb_t$ is an $nb \times 1$ vector of predetermined (backward-looking) variables, including auxiliary lags
+
+* $\epsilon_t$ is an $ne \times 1$ vector of shocks
+
+* $T$ is an $nx \times nb$ transition matrix, $nx=nf+nb$
+
+* $T_2$ is a $nb \times nb$ proper transition block with stable and unit eigenvalues
+
+* $R$ is an $nx \times ne$ shock impact matrix
+
+* $K$ is an $nx \times 1$ constant vector
+
+
+---
+
+## Triangular form
+
+Triangular transition equation with no forward expansion
+
+$$
+\begin{gathered}
+x_t^{\small\Delta} \equiv 
+\begin{bmatrix}
+xf_t \\[5pt]
+\alpha_t
+\end{bmatrix}
+= 
+T^{\small\Delta} \, \alpha_{t-1}
++ R^{\small\Delta} \, \epsilon_t + K^{\small\Delta}
+\\[20pt]
+T^{\small\Delta} = 
+\begin{bmatrix}
+T_1^{\small\Delta} \\[5pt]
+T_2^{\small\Delta}
+\end{bmatrix}
+\\[20pt]
+\alpha = U \, xb_t
+\end{gathered}
+$$
+
+where
+
+* $xf_t$ is an $nf \times 1$ vector of non-predetermined (forward-looking) variables identical to the rectangular solution
+
+* $\alpha_t$ is an $nb \times 1$ vector of transformed predetermined (backward-looking) variables 
+
+* $T^{\small\Delta}$ is an $nx \times nb$ transformed transition matrix, $nx=nf+nb$
+
+* $T_2$ is a $nb \times nb$ upper triangular proper transition block with unit roots concentrated in the top-left corner
+
+* $R^{\small\Delta}$ is an $nx \times ne$ transformed shock impact matrix
+
+* $K^{\small\Delta}$ is an $nx \times 1$ transformed constant vector
+
+* $U$ is an invertible transformation matrix

@@ -15,9 +15,16 @@
     "Capital" k
     "Labor" n
     "Technology" a
-
+    
+    "Ouput, rate of change" roc_y
     "Capital to output ratio" k_to_y
+
     "Log of output" yy
+
+    % We cannot have variable names starting with
+    % log_
+    % std_
+    % corr_
 
 
 !parameters
@@ -38,7 +45,9 @@
 
 !log-variables !all-but
 
-    k_to_y, yy
+    k_to_y % we can choose
+    yy     % must be taken away from log-variables
+
 
 
 !equations
@@ -56,6 +65,9 @@
 
     n = ss_roc_n*n{-1}*exp(shk_n) ...
     !! roc(n) = ss_roc_n;
+
+
+    roc_y = y / y{-1};
 
     k_to_y = k / y;
 
