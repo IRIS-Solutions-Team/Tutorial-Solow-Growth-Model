@@ -1,4 +1,4 @@
-%% Simulate different two types of transition dynamics
+%% Simulate different two types of dynamic simulations
 
 %% Clear workspace
 
@@ -12,7 +12,6 @@ load mat/createModel.mat m
 ch = databank.Chartpack;
 ch.Range = 0:20;
 ch.Round = 8;
-
 ch < access(m, "transition-variables");
 
 
@@ -36,3 +35,4 @@ d2 = steadydb(m, 1:20);
 s2 = simulate(m2, d2, 1:20, "prependInput", true);
 
 draw(ch, databank.merge("horzcat", d2, s2));
+

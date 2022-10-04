@@ -21,7 +21,6 @@ s1.T(end-3:end, :)
 
 %% Triangular solution
 
-
 s2 = solutionMatrices(m, "triangular", true);
 
 s2.T(end-3:end, :)
